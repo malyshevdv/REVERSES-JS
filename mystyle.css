@@ -1,0 +1,63 @@
+
+.pole {
+    border: 1px black solid;
+    display: grid;
+    gap: 5px;
+    grid-template-columns: max-content max-content max-content max-content  max-content  max-content;
+    align-content: center;
+}
+.unit {
+    width : 5rem;
+    height: 5rem;
+    padding: 1rem;
+    border: 1px gray solid;
+    text-align: center;
+    cursor: pointer;
+}
+.unit:hover {
+    background: blue;
+}
+.unit[checked="true"] {
+    border: 1px yellow solid;
+    visibility: hidden;
+}    
+
+
+.unit-pict {
+    width : 5rem;
+    height: 5rem;
+
+}
+
+[selected="true"] {
+    border: 1px black solid;
+}
+
+.left-panel{
+    flex: 25%;
+    display: flex;
+}
+.righ-panel{
+    flex: 25%;
+    display: flex;
+}
+
+
+.workplace{
+    display: flex;
+    flex-flow: column;
+}
+
+.button{
+    width : 10rem;
+    height: 2rem;
+    background: lightblue;
+    text-align: center;
+    border: 1px green solid ;
+    cursor: pointer;
+}
+.button:hover{
+    background: yellow;
+    border: 1px red solid ;
+}
+

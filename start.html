@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REVERSY</title>
+    <link rel="stylesheet" href="mystyle.css">
+</head>
+
+<script>
+
+    let ItemList = []
+    let SelectedItemList = {}
+    let dim_width = 6
+    let dim_height = 3
+    let pictureCount = Math.floor(dim_width * dim_height/2)
+    let item_count = 2 * pictureCount
+    let ClickNumber = 0
+    let TimerCount = 0;
+    let  myTimeout = setInterval(showTimer, 1000);
+    clearInterval(myTimeout)
+
+    function UpdateTitles(){
+        document.getElementById('ClickNumber').innerHTML = 'Steps:' + ClickNumber
+        document.getElementById('TimerCount').innerHTML = 'Time:' + TimerCount
+
+    }
+
+    function showTimer(){
+        TimerCount +=1;
+        UpdateTitles()
+        if (TimerCount>5000){
+            clearInterval(myTimeout); 
+        }
+    }
+
+    function getListNumber(maxNumber){
+        let myList = []
+
+        for (let i=1; i <=maxNumber; i++){
+            let ItemID = ''+ i;
+            if (i<10) {ItemID = '0'+ ItemID}
+            myList.push(ItemID)
+        }
+        return myList        
+    }
+
+    function shiftN(myArray, N){
+        let dd = myArray
+        for (let i=1; i<=N; i++){
+            myArray.push(myArray.shift())
+        }
+        return dd
+    }
+
+    function unsortList(myList){
+        let dd = myList
+        let newList = []
+        let myStep = 0
+
+        while (dd.length>0){
+            myStep = Math.floor(Math.random() * (dd.length-1)) 
+            dd = shiftN(dd, myStep)
+            newList.push(dd.shift())
+        }
+
+        return newList
+
+    }
+
+    function clearPole(){
+        pole = document.getElementById('pole')
+
+        let dd = pole.querySelectorAll
+        for (let Item of ItemList) {
+            ob = document.getElementById(Item.ItemID)
+            if (ob != undefined) {
+                pole.removeChild(ob)
+            }    
+            else{
+                console.log('Cannot find ' + Item.ItemID);
+            }
+        }
+
+    }
+
+
+    function Refill(){
+
+        clearPole();
+
+        pole = document.getElementById('pole');
+
+        
+
+        ItemList = []
+        
+        piclist = getListNumber(28);
+        
+        item_count = dim_width * dim_height
+        pictureCount = Math.floor(dim_width * dim_height/2)
+        item_count = 2 * pictureCount
+
+        for (let i=1; i<=pictureCount;i++){
+            piclist = shiftN(piclist, Math.floor(Math.random() * (piclist.length-1)))
+            pictureNumber = piclist.shift()
+            
+            let newItem = {
+                'pictureNumber': pictureNumber, 
+                'pictureName': 'pic' + pictureNumber + '.png',
+                'ItemID' : '',
+                'ItemPictureID' : ''
+                
+            }
+            let newItem2 = {
+                'pictureNumber': pictureNumber, 
+                'pictureName': 'pic' + pictureNumber + '.png',
+                'ItemID' : '',
+                'ItemPictureID' : ''
+                
+            }
+            
+            ItemList.push(newItem)
+            ItemList.push(newItem2);
+        }
+
+        ItemList = unsortList(ItemList)
+
+       
+        for (let i = 1; i <= ItemList.length; i++){
+
+            let Item = ItemList[i-1];
+            
+            let ItemID = 'Item' + i
+            if (i<10) {
+                ItemID = 'Item0' + i
+            }
+            
+            ItemList[i-1].ItemID = ItemID;
+            ItemList[i-1].ItemPictureID = ItemID + '.pict';
+
+            //console.log(i, '  ' + ItemID)
+            
+            
+            let Ob = document.createElement('div');
+            Ob.setAttribute('id', ItemID)
+            Ob.setAttribute('pictureid', ItemList[i-1].ItemPictureID)
+            Ob.className = "unit"
+            Ob.setAttribute('selected', 'false');
+            Ob.setAttribute('checked', 'false');
+            Ob.setAttribute('showpic', 'false');
+            Ob.setAttribute('pictureNumber', Item.pictureNumber)
+            
+            let ObPict = document.createElement('img');
+            ObPict.setAttribute('id', ItemList[i-1].ItemPictureID);
+            ObPict.setAttribute('src', Item.pictureName);
+            ObPict.className = 'unit-pict'
+
+            Ob.appendChild(ObPict)
+            pole.appendChild(Ob)
+
+            Ob.setAttribute('onClick', 'PushItem(id)');
+        }
+        
+        ClickNumber = 0;
+        clearInterval(myTimeout);
+        TimerCount = 0;
+
+        UpdateTitles();
+        
+        //sleep(2000).then(() => { ShowCarsAll(); });
+
+    }
+    
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function PushItem(id){
+
+        ClickNumber +=1;
+
+        if (ClickNumber == 1) {
+            UnselectCards();
+        }
+
+        Ob = document.getElementById(id);
+        let selected = Ob.attributes['selected'].value;
+        if (selected == 'true') {
+            Ob.setAttribute('selected','false')
+            let pict = document.getElementById('' + id + '.pict');
+            pict.setAttribute('src','Unselected.png')
+            
+        }
+        else {
+            Ob.setAttribute('selected','true')
+            let pict = document.getElementById('' + id + '.pict');
+            let picName = 'pic' + Ob.attributes['pictureNumber'].value  + '.png'
+            pict.setAttribute('src',picName);
+
+            if (ClickNumber ==1){
+                myTimeout = setInterval(showTimer, 1000);
+            }
+        }
+        
+        SelectedItems = document.querySelectorAll("[selected = 'true']")
+        if (SelectedItems.length == 2) {
+            if (SelectedItems[0].getAttribute('pictureNumber') == SelectedItems[1].getAttribute('pictureNumber')) {
+                SelectedItems.forEach((item, ind, arr) => {
+                    CheckCard(item.id);     
+                }) 
+            }
+            else
+            {
+                setInterval(UnselectSelectedCards, 3000);
+                //sleep(3000);
+                //SelectedItems.forEach((item, ind, arr) => {
+                //    UnselectCard(item.id);     
+                //}) 
+            }
+        }
+        console.log(SelectedItems.length)        
+
+        UpdateTitles();
+
+    }
+    function UnselectCards(){
+        for (Item of ItemList){
+            let pict = document.getElementById(Item.ItemPictureID);
+            pict.setAttribute('src', 'Unselected.png');
+        }
+    }
+    
+    function UnselectSelectedCards(){
+        SelectedItems = document.querySelectorAll("[selected = 'true']")
+        SelectedItems.forEach((item, ind, arr) => {
+                UnselectCard(item.id);   
+        }) 
+    }    
+    
+
+    function UnselectCard(id){
+        let Ob = document.getElementById(id);
+        Ob.setAttribute('selected', 'false');
+        
+        let pict = document.getElementById(Ob.getAttribute('pictureid'));
+        pict.setAttribute('src','Unselected.png');
+    }
+
+    function CheckCard(id){
+        let Ob = document.getElementById(id);
+        Ob.setAttribute('checked', 'true');
+        Ob.setAttribute('selected', 'false');
+        
+    }
+
+    function ChangeWidth(){
+        dim_width = document.getElementById('pole-width').valueAsNumber
+        Refill()
+    }
+    function ChangeHeight(){
+        dim_height = document.getElementById('pole-height').valueAsNumber
+        Refill()
+    }
+
+
+</script>
+
+
+<body>
+<div><a>REVERCE</a></div>
+
+</body>
+<div class="workplace">
+    <div class="left-panel">
+        <div class="button revers-button" onClick = 'Refill()'>
+            <img src="refresh.png" width="23px" height="23px"> RESTART
+            
+        </div>
+        <label>Height</label>
+        <input id="pole-height" type="number" value="3" onchange="ChangeHeight()">
+        <label>Width</label>
+        <input id="pole-width" type="number" value="6" onchange="ChangeWidth()">
+
+        <span id="ClickNumber">Steps: 0</span>
+        <span id="TimerCount">Time: 00:00:00</span>
+        
+    </div>
+    <div id='pole' class="pole">
+       <!--
+         <div id="unit01" class="unit" selected = "true" checked="false" showpic="true"><img class = "unit-pict"src="pic01.png"></div>
+        --> 
+
+       </div>
+    <div class="left-panel">
+        
+    </div>
+</div>
+
+
+
+</html>
+
+
+
