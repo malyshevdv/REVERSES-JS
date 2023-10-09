@@ -1,3 +1,61 @@
+.root{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    
+}
+
+.bbr {
+    width: 16px;    
+    height: 16px;
+    cursor: pointer;
+    
+}
+
+
+.leftpanel{
+    
+    height: 100%;
+
+}
+
+.centralpanel{
+    
+    height: 100%;
+    
+}
+.rightpanel{
+    
+    height: 100%;
+    
+}
+
+.workplace{
+    display: flex;
+    flex-flow: column;
+    grid-template-columns: auto 50% auto;
+    
+    align-items: center;
+    justify-content: center;
+}
+
+
+.top-panel{
+    flex: 25%;
+    display: flex;
+    
+}
+.down-panel{
+    flex: 25%;
+    display: flex;
+    flex-flow: column;
+}
+.horizontal{
+    display: flex;
+    flex-direction: row;
+}
+.vertical{
+    display: flex;
+    flex-direction: column;
+}
 
 .pole {
     border: 1px black solid;
@@ -5,6 +63,8 @@
     gap: 5px;
     grid-template-columns: max-content max-content max-content max-content  max-content  max-content;
     align-content: center;
+    grid-template-rows: max-content;
+
 }
 .unit {
     width : 5rem;
@@ -22,6 +82,9 @@
     visibility: hidden;
 }    
 
+.titles{
+    font-size: 2rem;
+}
 
 .unit-pict {
     width : 5rem;
@@ -33,23 +96,11 @@
     border: 1px black solid;
 }
 
-.left-panel{
-    flex: 25%;
-    display: flex;
-}
-.righ-panel{
-    flex: 25%;
-    display: flex;
-}
 
 
-.workplace{
-    display: flex;
-    flex-flow: column;
-}
 
 .button{
-    width : 10rem;
+    width : 12rem;
     height: 2rem;
     background: lightblue;
     text-align: center;
