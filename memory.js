@@ -174,15 +174,15 @@ function getListNumber(maxNumber){
 }
 
 function shiftN(myArray, N){
-    let dd = myArray
+    let dd = [...myArray]
     for (let i=1; i<=N; i++){
-        myArray.push(myArray.shift())
+        dd.push(dd.shift())
     }
     return dd
 }
 
 function unsortList(myList){
-    let dd = myList
+    let dd = [...myList]
     let newList = []
     let myStep = 0
 
@@ -190,6 +190,9 @@ function unsortList(myList){
         myStep = Math.floor(Math.random() * (dd.length-1)) 
         dd = shiftN(dd, myStep)
         newList.push(dd.shift())
+
+
+
     }
 
     return newList
