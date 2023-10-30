@@ -4,40 +4,15 @@ import './index.css';
 import './mystyle.css';
 //import App from './App';
 
-import png_refresh from './pictures/refresh.png';
-import png_arrow_up from './pictures/arrow-up.png';
-import png_arrow_down from './pictures/arrow-down.png';
-import png_arrow_left from './pictures/arrow-left.png';
-import png_arrow_right from './pictures/arrow-right.png';
+//COMPONENTS
+import Receip from './components/receipt'
+import StarReyting from './components/StarReyting'
 
-import pict01 from './pictures/pic01.png';
-import pict02 from './pictures/pic02.png';
-import pict03 from './pictures/pic03.png';
-import pict04 from './pictures/pic04.png';
-import pict05 from './pictures/pic05.png';
-import pict06 from './pictures/pic06.png';
-import pict07 from './pictures/pic07.png';
-import pict08 from './pictures/pic08.png';
-import pict09 from './pictures/pic09.png';
-import pict10 from './pictures/pic10.png';
-import pict11 from './pictures/pic11.png';
-import pict12 from './pictures/pic12.png';
-import pict13 from './pictures/pic13.png';
-import pict14 from './pictures/pic14.png';
-import pict15 from './pictures/pic15.png';
-import pict16 from './pictures/pic16.png';
-import pict17 from './pictures/pic17.png';
-import pict18 from './pictures/pic18.png';
-import pict19 from './pictures/pic19.png';
-import pict20 from './pictures/pic20.png';
-import pict21 from './pictures/pic21.png';
-import pict22 from './pictures/pic22.png';
-import pict23 from './pictures/pic23.png';
-import pict24 from './pictures/pic24.png';
-import pict25 from './pictures/pic25.png';
-import pict26 from './pictures/pic26.png';
-import pict27 from './pictures/pic27.png';
-import pict28 from './pictures/pic28.png';
+import MainPanel from './components/mainPanel'
+
+import MyData from './data/datadata.json'
+
+
 import { renderIntoDocument } from 'react-dom/test-utils';
 
 
@@ -414,112 +389,45 @@ function ChangeHeight(){
 }
 
 
-function LeftPanel(){
-  return ( 
-<div className="leftpanel"></div>
+
+
+//************************   TEST   ****************************** */
+
+function IngredientsList({itemList, MyName}) {
+  return React.createElement(
+  "ul",
+  { className: "ingredients", itemList : itemList},
+  itemList.map((ingredient, i) =>
+  React.createElement("li", { key2: ''+MyName + i }, ingredient)
   )
-}
+  );
+ }
 
-function MenuPanel(){
-  return(
-    <div className="top-panel titles" height="32px">
-            
-            <div className="button" onClick = 'ClickButton("ReFill")' height="32px">
-                <img src={png_refresh} width="23px" height="23px" />
-                RESTART
-                
-            </div>
-            <span id="HeightTitle">Height: </span>
-            <div className="bbr" onclick='ClickButton("HeightUp")' >
-                <img src={png_arrow_up} />    
-            </div>
-            <div className="bbr" onclick='ClickButton("HeightDown")' height="16px">
-                <img src={png_arrow_down} />    
-            </div>
-            
-            <span id="WidthTitle">Width: </span>
-            <div className="bbr" onclick='ClickButton("WidthtUp")' >
-                <img src={png_arrow_up} />    
-            </div>
-            <div className="bbr" onclick='ClickButton("WidthDown")' height="16px">
-                <img src={png_arrow_down} />    
-            </div>
-            
-        
-            <span id="ClickNumber"> Steps: 0</span>
-            <span id="TimerCount"> Time: 0</span>
-            <span id="Count"> Count:</span>
-            
-        </div>
-  )
-}
-
-function ResultPanel(){
-  return (
-    <div class="down-panel">
-            <p>RESULT TABLE</p>
-
-            <table border="1px" id="tableResult">
-                <tr>
-                    <th width="20rem">Position</th>
-                    <th width="120rem">Steps</th>
-                    <th width="120rem">Time</th>
-                    <th width="120rem">Size</th>
-                </tr>
-                
-            </table>
+ 
 
 
-        </div>
-
-  )
-}
-
-function PolePanel(){
-  return (
-<div id='pole' class="pole">
-        </div>
-  )
-}
 
 
-function CentralPanel(){
-  return (
-    <div className='centralpanel'>
 
-        <MenuPanel/>
-        
-        <PolePanel/>
-        
-        <ResultPanel/>
-
-    </div>
-  )
-}
-
-function RightPanel(){
-  return (
-<div class="rightpanel"></div>
-  )
-}
-
-function main() {
-return (
-<div class="workplace">
-    <LeftPanel />
-    
-    <CentralPanel />
-
-</div>
-
-)}
-
-
+//******************************************************** */
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-root.render([main()]
-);
+
+
+
+let res = 1
+
+//if (res == 0) {
+//  let NextMenu = React.createElement(Menu, { title: 'Main menu',  ReceptItems: MyData, Number : 5}, null)
+//  root.render([MainPanel()]);
+//}
+//else {
+  root.render( <MainPanel/>);
+//}
+
+
+
 
 
