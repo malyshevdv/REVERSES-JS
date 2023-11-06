@@ -77,10 +77,16 @@
 .unit:hover {
     background: blue;
 }
-.unit[checked="true"] {
+.unit[visible="false"] {
     border: 1px yellow solid;
     visibility: hidden;
 }    
+
+.completed {
+    border: 1px yellow solid;
+    visibility: hidden;
+}    
+
 
 .titles{
     font-size: 2rem;

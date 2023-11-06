@@ -1,28 +1,20 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Unselected from '../pictures/Unselected.png';
 
 
-export default function Card({id, pictureid, checked, showpic, pictureNumber, picturesrc, setStep}){
+export default function Card({ind, item, onCardClick = f =>f}){
     
-    const [selected, setSelected] = useState(true)
-
     return (
-        <div className='unit' 
-            id={id} 
-            pictureid = {pictureid} 
-            
-            showpic={showpic} 
-            onClick = {(setStep) => (
-                setSelected(!selected) 
-                )
-            } 
+        <div 
+            className= {item.completed === true ? 'unit completed' : 'unit'}
+            ind = {ind} 
+            onClick = {() => onCardClick(ind)}
             >
             
-            <CardBack  
-               id='04' 
-               src= '' 
-               selected = {selected} 
-               picturesrc = {picturesrc}
+            <CardFace  
+               showCard = {item.showCard} 
+               picturesrc = {item.src}
+               completed = {item.completed}
             />
 
         </div>
@@ -30,8 +22,12 @@ export default function Card({id, pictureid, checked, showpic, pictureNumber, pi
 
 }
 
-function CardBack({id, selected, picturesrc}){
+function CardFace({showCard, completed, picturesrc}){
     return (
-        <img className='unit-pict' id='' src={selected ? picturesrc : Unselected}/>
+        <img 
+            className = 'unit-pict'
+            alt = 'alt' 
+            completed = {completed.toString()} src={showCard ? picturesrc : Unselected}
+        />
     )
 }

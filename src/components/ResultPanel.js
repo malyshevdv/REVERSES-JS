@@ -1,4 +1,5 @@
-export default function ResultPanel(){
+export default function ResultPanel({ResultItemTable}){
+
     return (
         <div className="down-panel">
                 <p>RESULT TABLE</p>
@@ -14,15 +15,25 @@ export default function ResultPanel(){
                     </thead>
                     <tbody id="tableResult">
 
+                    {ResultItemTable.map((myTemp, ind)=>
+                    (<ResultString key = {ind} {...myTemp}
+                    />)
+                    )}
+
                     </tbody>
 
-
-
-
                 </table>
-    
-    
             </div>
-    
+    )
+}
+
+function ResultString({position, steps, time, size}){
+    return (
+        <tr>
+            <td>{position}</td>
+            <td>{steps}</td>
+            <td>{time}</td>
+            <td>{size}</td>
+        </tr>
     )
 }

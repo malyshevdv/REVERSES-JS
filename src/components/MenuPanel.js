@@ -5,14 +5,28 @@ import ButtonRefresh from '../components/ButtonRefresh'
 import png_arrow_up from '../pictures/arrow-up.png';
 import png_arrow_down from '../pictures/arrow-down.png';
 
-export default function MenuPanel( {Counts, Steps, Times}){
+export default function MenuPanel( {Counts, Steps, Times, onClickRestart = f => f, onClickArrowButton = ff => ff}){
     return(
       <div className="top-panel titles" height="32px" >
               
-              <ButtonRefresh  />
+              <ButtonRefresh 
+                onClickRestart = {onClickRestart}
+              />
               
-              <ParametrLabelWithCFG  id="HeightTitle" LabelText="Height" Value="0"/>
-              <ParametrLabelWithCFG  id="WidthTitle" LabelText="Width" Value="0"/>
+              <ParametrLabelWithCFG  
+                key="HeightTitle" 
+                id="HeightTitle" 
+                LabelText="Height" 
+                Value="0"
+                onClickArrowButton = {onClickArrowButton}
+              />
+              <ParametrLabelWithCFG  
+                key="WidthTitle" 
+                id="WidthTitle" 
+                LabelText="Width" 
+                Value="0"
+                onClickArrowButton = {onClickArrowButton}
+              />
 
               
               <ParametrLabel id="ClickNumber" LabelText="Steps" Value={Steps} />
@@ -29,15 +43,18 @@ function ParametrLabel({id, LabelText, Value}){
     )
 }
 
-function ParametrLabelWithCFG({id, LabelText}){
+function ParametrLabelWithCFG({id, LabelText, onClickArrowButton = f => f}){
     return (
     <>
-    <span id={id}>{LabelText}: </span>
-    <div className="bbr" >
-        <img src={png_arrow_up} />    
-    </div>
-    <div className="bbr" height="16px">
-        <img src={png_arrow_down} />    
-    </div>
+        <span id={id}>{LabelText}: </span>
+        <div className="bbr" onClick = {onClickArrowButton("ddd","sss")} >
+            <img src={png_arrow_up} />    
+        </div>
+        
     </>
 )}
+/*
+<div className="bbr" height="16px">
+            <img src={png_arrow_down} />    
+        </div>
+*/        
