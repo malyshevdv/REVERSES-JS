@@ -4,57 +4,67 @@ import ButtonRefresh from '../components/ButtonRefresh'
 //PICTURES
 import png_arrow_up from '../pictures/arrow-up.png';
 import png_arrow_down from '../pictures/arrow-down.png';
+import { useGameContext } from './hooks';
 
-export default function MenuPanel( {Counts, Steps, Times, onClickRestart = f => f, onClickArrowButton = ff => ff}){
+export default function MenuPanel( {Counts, Steps, Times}){
     return(
       <div className="top-panel titles" height="32px" >
               
-              <ButtonRefresh 
-                onClickRestart = {onClickRestart}
-              />
+              <ButtonRefresh/>
               
               <ParametrLabelWithCFG  
                 key="HeightTitle" 
                 id="HeightTitle" 
-                LabelText="Height" 
+                labelText="Height" 
                 Value="0"
-                onClickArrowButton = {onClickArrowButton}
+                
               />
               <ParametrLabelWithCFG  
                 key="WidthTitle" 
                 id="WidthTitle" 
-                LabelText="Width" 
+                labelText="Width" 
                 Value="0"
-                onClickArrowButton = {onClickArrowButton}
               />
 
               
-              <ParametrLabel id="ClickNumber" LabelText="Steps" Value={Steps} />
-              <ParametrLabel id="TimerCount" LabelText="Time" Value={Times} />
-              <ParametrLabel id="Count" LabelText="Count" Value={Counts} />
+              <ParametrLabel id="ClickNumber" labelText="Steps" Value={Steps} />
+              <ParametrLabel id="TimerCount" labelText="Time" Value={Times} />
+              <ParametrLabel id="Count" labelText="Count" Value={Counts} />
               
           </div>
     )
   }
 
-function ParametrLabel({id, LabelText, Value}){
+function ParametrLabel({id, labelText, Value}){
     return (
-        <span id={id}> {LabelText}: {Value}</span>
+        <span id={id}> {labelText}: {Value}</span>
     )
 }
 
-function ParametrLabelWithCFG({id, LabelText, onClickArrowButton = f => f}){
+function ArgumentButtonUp({labelText}){
+  const {onClickUp, onClickDown} = useGameContext();
+    
+  return (
+    <>
+        <div className="bbr" onClick={() => onClickUp(labelText)}>
+            <img alt = '' src={png_arrow_up} />    
+        </div>
+        <div className="bbr" onClick={() => onClickDown(labelText)}>
+            <img alt = '' src={png_arrow_down} />    
+        </div>
+    </>
+    )
+}
+
+
+function ParametrLabelWithCFG({id, labelText}){
     return (
     <>
-        <span id={id}>{LabelText}: </span>
-        <div className="bbr" onClick = {onClickArrowButton("ddd","sss")} >
-            <img src={png_arrow_up} />    
-        </div>
-        
+        <span id={id} > {labelText}: </span>
+        <ArgumentButtonUp labelText={labelText}/>
     </>
+
+
+
 )}
-/*
-<div className="bbr" height="16px">
-            <img src={png_arrow_down} />    
-        </div>
-*/        
+

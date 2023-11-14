@@ -1,14 +1,15 @@
 import React from 'react'
 import Unselected from '../pictures/Unselected.png';
+import { useGameContext } from './hooks';
 
 
-export default function Card({ind, item, onCardClick = f =>f}){
-    
+export default function Card({ind, item}){
+    const {onCardClick} = useGameContext();
     return (
         <div 
             className= {item.completed === true ? 'unit completed' : 'unit'}
-            ind = {ind} 
-            onClick = {() => onCardClick(ind)}
+                ind = {ind} 
+                onClick = {() => onCardClick(ind)}
             >
             
             <CardFace  
@@ -26,8 +27,10 @@ function CardFace({showCard, completed, picturesrc}){
     return (
         <img 
             className = 'unit-pict'
-            alt = 'alt' 
-            completed = {completed.toString()} src={showCard ? picturesrc : Unselected}
+            alt = 'card' 
+            completed = {completed.toString()} 
+            
+            src={showCard ? picturesrc : Unselected}
         />
     )
 }

@@ -1,13 +1,14 @@
-import React, {useState} from 'react'
+import React from 'react'
 
 import Card from '../components/card'
+import { useGameContext } from './hooks'
 
 
 
 //======= POLE ================
 
-export default function PolePanel({ItemList, onCardClick = f => f}){
-
+export default function PolePanel(){
+    const {ItemList} = useGameContext();
     
     return (
         <div id='pole' className="pole">
@@ -16,7 +17,6 @@ export default function PolePanel({ItemList, onCardClick = f => f}){
                 key={ind} 
                 ind={ind} 
                 item={item} 
-                onCardClick = {onCardClick}
                 />    
             )}
             

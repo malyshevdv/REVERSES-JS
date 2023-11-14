@@ -1,8 +1,10 @@
 import React from 'react'
 import png_refresh from '../pictures/refresh.png';
 
-export default function ButtonRefresh({onClickRestart = f => f}){
+import {useGameContext} from "../components/hooks"
 
+export default function ButtonRefresh(){
+    const {onClickRestart} = useGameContext();
     //ClickButton("ReFill")
 
 return(

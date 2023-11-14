@@ -1,90 +1,93 @@
-import React , {useState} from 'react'
+import React , {useState, createContext, useContext} from 'react'
 
 import StarReyting from '../components/StarReyting'
-import colorData from "../data/colors.json";
+import ColorForm from '../components/color-form'
+
+
+
 import { FaTrash } from "react-icons/fa";
 
-const myF = (id, newReiting) => {
-    //colors.forEach(color, color.id == id? color.reiting = newReiting: 0)
-    return 1
-}
+import colorData from "../data/colors.json";
 
+import { v4 } from "uuid";
+
+import {MyContext, useColorContext} from '../components/color-context'
+//export const MyContext = createContext();
+//export const useColorContext = () => useContext(MyContext);
 
 
 export default function App() {
     const [colors, setColors] = useState(colorData);
-    return (
-    <ColorList 
-        key='myColorList'
-        colors={colors} 
-        onRemoveColor = {id => {
-            const newColors = colors.filter(color => color.id !== id);
-            setColors(newColors);
-            }
+    
+    
+    const onRemoveColor = id => {
+        const newColors = colors.filter(color => color.id !== id);
+        setColors(newColors);
         }
-        onSelectReiting = {(id, rating) => {
-            
-            //colors.forEach( (color) => {color.id == id ? color.rating = rating: color.rating = color.rating});
-            //const newColors = colors.filter(color => color.id !== id);
-            const newColors = colors.map(color =>
-                color.id === id ? { ...color, rating } : color
-                );
+    
+    
+    const onSelectReiting = (id, rating) => setColors( colors.map(color => color.id === id ? { ...color, rating } : color)) 
+    
+    
+    const onNewColor = (title, color) => { 
+        const NewColor = {"title" : title, "color" : color, id : v4()}
+        setColors([...colors, NewColor])
+    }
 
-            console.log(id);  
-            setColors(colors);
-            console.log(rating);  
-            console.log(colors);  
-            setColors(newColors);            
-            }
-        }
-    />
+    return(
+        <MyContext.Provider value={{colors, setColors, onRemoveColor, onSelectReiting, onNewColor}}>
+            <ColorList></ColorList>
+        </MyContext.Provider>
     )
+
 }
 
-function ColorList({colors = [] , onRemoveColor = f => f , onSelectReiting = f=>f}){
+
+
+export function ColorList(){
+    const {colors, MyName} = useColorContext()
     return (
     <>
-    
-    {colors.map((item, ind) => 
-        <Color 
-            key ={item.id} 
-            id ={item.id} 
-            {...item} 
-            onRemoveColor = {onRemoveColor}
-            onSelectReiting = {onSelectReiting}
-        />
-    )}
-    
+    <a>ddddsdsds</a>
+    {MyName}
+        {colors.map((item, ind) => 
+            <Color 
+                key ={item.id} 
+                id ={item.id} 
+                {...item} 
+            />
+
+        )}
+
+        <ColorForm/>
+
     </>)
 }
-//onRemoveColor = {onRemoveColor}
-//onClick={() => onRemove(id)}
-//onClick={onRemoveColor(''+id)} 
-
-function Color({id, color, rating, title, onRemoveColor = f => f , onSelectReiting = f =>f}){
-    
- return (
-    <div >
-        <p style={color={color}}>{title}</p>
-        
-        <button >
-               <FaTrash 
-               onClick = {() => onRemoveColor(id)}
-               />
-        </button>
-
-        <StarReyting 
-           ColorId = {id}
-           TotalStars={7} 
-           selectedStars={rating}  
-           onSelectReiting = {onSelectReiting}
-           style = {{padding :'20px' }}  
-
-        />
 
 
-    </div>
 
 
- )   
+
+function Color({id, color, rating, title}){
+    const {onRemoveColor} = useColorContext();    
+    return (
+        <div >
+            <p style={color={color}}>{title}</p>
+            
+            <button >
+                <FaTrash 
+                onClick = {() => onRemoveColor(id)}
+                />
+            </button>
+
+            <StarReyting 
+                ColorId = {id}
+                TotalStars={7} 
+                selectedStars={rating}  
+                style = {{padding :'20px' }}  
+            />
+
+
+        </div>
+    )   
 }
