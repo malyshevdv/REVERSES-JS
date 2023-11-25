@@ -69,37 +69,5 @@ export function unsortList(myList){
   return newList
 }
 
-export const reminesToOpen = (ItemList) => ItemList.filter((item)=>(item.completed === false && item.showCard === true));
 
-export function InvertCard(id, ItemList){
-  
-    if (ItemList[id]['completed'] === false) {
-  
-      let openedListBefore = reminesToOpen(ItemList)
-      
-      if (openedListBefore.length>=2) {
-          openedListBefore.map((item) => item['showCard'] = false)
-      }
-  
-      ItemList[id]['showCard'] = !ItemList[id]['showCard'];
-      let openedListAfter = reminesToOpen(ItemList)
-      
-      if (openedListAfter.length>=2) {
-        if (openedListAfter[0].id === openedListAfter[1].id){
-          openedListAfter.map((item) => {
-            item['completed'] = true; 
-            item['showCard'] = false
-            //console.log('complete ' + id)
-            return true;
-            })
-        }
-      }
-      
-      if (openedListAfter.length>=3 && openedListBefore.length>=2) {
-           openedListBefore.map((item) => item['showCard'] = false)
-      
-    }
-    }
-  
-  }
 

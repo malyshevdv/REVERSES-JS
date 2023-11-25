@@ -1,7 +1,7 @@
-import React , {useState, createContext, useContext} from 'react'
+import React , {useState, createContext, useContext, memo, useEffect} from 'react'
 
-import StarReyting from '../components/StarReyting'
-import ColorForm from '../components/color-form'
+import StarReyting from './StarReyting'
+import ColorForm from './color-form'
 
 
 
@@ -11,12 +11,15 @@ import colorData from "../data/colors.json";
 
 import { v4 } from "uuid";
 
-import {MyContext, useColorContext} from '../components/color-context'
+import {MyContext, useColorContext} from './color-context'
 //export const MyContext = createContext();
 //export const useColorContext = () => useContext(MyContext);
 
 
-export default function App() {
+const Color3 = memo(Color2, (newProps, oldProps) => (newProps.title === oldProps.title))
+const Color = memo(Color2, () => true)
+
+export default function App1() {
     const [colors, setColors] = useState(colorData);
     
     
@@ -36,13 +39,42 @@ export default function App() {
 
     return(
         <MyContext.Provider value={{colors, setColors, onRemoveColor, onSelectReiting, onNewColor}}>
+            
+            <GitUserInfo/>
+
             <ColorList></ColorList>
+
         </MyContext.Provider>
     )
 
 }
 
+function GitUserInfo({username}){
+    const [data, setName] = useState('DeniskaRediska');
 
+    useEffect(()=>{
+
+        fetch('https://api.github.com/users/malyshevdv',)
+        //.then((val)=>{setName('answer'+val)})
+        .then(response => response.json())
+        .then(setName)
+        .catch(console.error)
+
+
+    }, [])
+
+    if (data) {
+        return (
+            <>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+            <p>{data.name}</p>
+            </>
+        )    
+    }
+
+return null
+
+}
 
 export function ColorList(){
     const {colors, MyName} = useColorContext()
@@ -68,8 +100,13 @@ export function ColorList(){
 
 
 
-function Color({id, color, rating, title}){
-    const {onRemoveColor} = useColorContext();    
+function Color2({id, color, rating, title}){
+    const {onRemoveColor} = useColorContext();   
+    
+    useEffect(()=>{
+        console.log(title);     
+    })
+    
     return (
         <div >
             <p style={color={color}}>{title}</p>
@@ -91,3 +128,4 @@ function Color({id, color, rating, title}){
         </div>
     )   
 }
+

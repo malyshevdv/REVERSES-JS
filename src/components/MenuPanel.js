@@ -1,3 +1,5 @@
+import React , {useState, useEffect, useContext} from 'react'
+import {GameContext} from './hooks'
 import ButtonRefresh from '../components/ButtonRefresh'
 
 
@@ -6,34 +8,36 @@ import png_arrow_up from '../pictures/arrow-up.png';
 import png_arrow_down from '../pictures/arrow-down.png';
 import { useGameContext } from './hooks';
 
-export default function MenuPanel( {Counts, Steps, Times}){
-    return(
-      <div className="top-panel titles" height="32px" >
-              
-              <ButtonRefresh/>
-              
-              <ParametrLabelWithCFG  
-                key="HeightTitle" 
-                id="HeightTitle" 
-                labelText="Height" 
-                Value="0"
-                
-              />
-              <ParametrLabelWithCFG  
-                key="WidthTitle" 
-                id="WidthTitle" 
-                labelText="Width" 
-                Value="0"
-              />
+export default function MenuPanel( ){
+  const {Counts, Steps, Times } = useContext(GameContext);  
+  
+  return (
+    <div className="top-panel titles" height="32px" >
 
-              
-              <ParametrLabel id="ClickNumber" labelText="Steps" Value={Steps} />
-              <ParametrLabel id="TimerCount" labelText="Time" Value={Times} />
-              <ParametrLabel id="Count" labelText="Count" Value={Counts} />
-              
-          </div>
-    )
-  }
+      <ButtonRefresh />
+
+      <ParametrLabelWithCFG
+        key="HeightTitle"
+        id="HeightTitle"
+        labelText="Height"
+        Value="0"
+
+      />
+      <ParametrLabelWithCFG
+        key="WidthTitle"
+        id="WidthTitle"
+        labelText="Width"
+        Value="0"
+      />
+
+
+      <ParametrLabel id="ClickNumber" labelText="Steps" Value={Steps} />
+      <ParametrLabel id="TimerCount" labelText="Time" Value={Times} />
+      <ParametrLabel id="Count" labelText="Count" Value={Counts} />
+
+    </div>
+  )
+}
 
 function ParametrLabel({id, labelText, Value}){
     return (

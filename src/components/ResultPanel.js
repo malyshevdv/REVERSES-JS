@@ -1,9 +1,37 @@
-export default function ResultPanel({ResultItemTable}){
+import React , {useState, useEffect, useContext} from 'react'
+import {GameContext} from './hooks'
+
+function ResultHook(){
+    const [ResultItemTable, addNewResult] = useState([]);
+    
+    return [ResultItemTable, addNewResult];
+
+}
+
+export default function ResultPanel(){
+    const {Finished, Steps, CurrentSize} = useContext(GameContext);
+    const [ResultItemTable, addNewResult] = ResultHook();
+    
+
+    useEffect(()=>{
+        if (Finished) {
+            console.log('Add new item in useEffect')
+            //debugger;
+            const ResItem = {
+                'position': ResultItemTable.length + 1,
+                'steps': Steps,
+                'time': 0,
+                'size': CurrentSize()}
+            addNewResult([...ResultItemTable, ResItem]);
+        }
+
+
+    },[Finished])
+
 
     return (
         <div className="down-panel">
                 <p>RESULT TABLE</p>
-    
                 <table border="1px" >
                     <thead>
                         <tr>
@@ -16,7 +44,7 @@ export default function ResultPanel({ResultItemTable}){
                     <tbody id="tableResult">
 
                     {ResultItemTable.map((myTemp, ind)=>
-                    (<ResultString key = {ind} {...myTemp}
+                        (<ResultString key = {ind} {...myTemp}
                     />)
                     )}
 

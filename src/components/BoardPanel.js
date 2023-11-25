@@ -1,13 +1,14 @@
 import React from 'react'
 
-import Card from '../components/card'
+import {Card} from './card'
 import { useGameContext } from './hooks'
 
 
 
 //======= POLE ================
 
-export default function PolePanel(){
+export default function BoardPanel(){
+    
     const {ItemList} = useGameContext();
     
     return (
@@ -16,6 +17,9 @@ export default function PolePanel(){
             <Card 
                 key={ind} 
                 ind={ind} 
+                completed={item.completed}
+                showCard={item.showCard}
+                src={item.src}
                 item={item} 
                 />    
             )}

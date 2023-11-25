@@ -1,27 +1,34 @@
-import React from 'react'
+import React, {memo} from 'react'
 import Unselected from '../pictures/Unselected.png';
 import { useGameContext } from './hooks';
 
 
-export default function Card({ind, item}){
-    const {onCardClick} = useGameContext();
+
+export function Card({ind, completed,showCard, src}){
+    const {onCardClickPole} = useGameContext();
+    console.log('Card ' + ind);
     return (
         <div 
-            className= {item.completed === true ? 'unit completed' : 'unit'}
+            className= {completed === true ? 'unit completed' : 'unit'}
                 ind = {ind} 
-                onClick = {() => onCardClick(ind)}
+                onClick = {() => onCardClickPole(ind)}
             >
             
             <CardFace  
-               showCard = {item.showCard} 
-               picturesrc = {item.src}
-               completed = {item.completed}
+               showCard = {showCard} 
+               picturesrc = {src}
+               completed = {completed}
             />
 
         </div>
     )
 
 }
+
+export const Card2 = memo(Card, (prevProp, newProp) => (
+    prevProp.completed === newProp.completed && 
+    prevProp.showCard === newProp.showCard)
+    )
 
 function CardFace({showCard, completed, picturesrc}){
     return (

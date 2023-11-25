@@ -1,11 +1,12 @@
-import React , {useState, useEffect} from 'react'
+import React , {useState, useEffect, memo} from 'react'
 
 import MenuPanel from '../components/MenuPanel'
-import PolePanel from '../components/PolePanel'
+import BoardPanel from './BoardPanel'
 import ResultPanel from '../components/ResultPanel'
+import {GameTimer} from '../components/gameTimer'
+import Board from './Board'
 
-import App from '../components/ColorList'
-import {ColorProvider} from '../components/color-context'
+import App from '../components/test_app'
 
 import {InvertCard, reminesToOpen, GameContext, max_pictures, unsortList, pictureList} from '../components/hooks'
 
@@ -21,154 +22,68 @@ import png_arrow_right from '../pictures/arrow-right.png';
 
 
 
-function CardClick(id, ItemList, Steps, buferItems){
-  
-  let Result = false;
-
-  if (Steps===0) {
-    for (let i=0; i<ItemList.length; i++){
-      if (i !==id) {ItemList[i].showCard = false}
-    }
-    buferItems.push(id);  
-  }             
-  else{
-    InvertCard(id, ItemList, buferItems);
-  } 
-  Result = (reminesToOpen(ItemList).length === 0);
-  return Result;
-
-}
-function ArrowPush(){
-  console.log("TEST ARROW PUSH")
-}
-
-
 export default function CentralPanel(){
 
-  let [dim_width, setWidth] = useState(6);
-  let [dim_height, setHeight] = useState(3);
-  let pictureCount = () => (Math.floor(dim_width * dim_height/2));
+  const [ItemList, OnClickRefresh, getfillList, SetupNewWidth, SetupNewHeight, onCardClick, Steps, Counts, Finished, CurrentSize] = Board();
 
-  const [Counts, setCount] = useState(0)
-  const [Steps, setStep] = useState(0)
-  const [Times, setTime] = useState(0)
-
-  const [buferItems, addToBufer] = useState([], (item) => {buferItems.push(item)})
+  const [Times, RestartTimer, StopTimer, StartTimer] = GameTimer();
 
   
+  const onCardClickPole = (id) => {
+      
+    const res = onCardClick(id);
+    //debugger
+    if (res.steps === 1) {StartTimer()};
 
-  const [ResultItemTable, addNewResult] = useState([]); //, (newItem) => ResultItemTable.push(newItem) )
-
-  const onClickRestart = () => { 
-    
-    OnClickRefresh(getfillList());
-    setStep(0);
   }
-
-
-  const getList = () => pictureList.map(
-    (item, ind) => ({
-        'id' : ind,     // identifier
-        'src' : item,   //image source
-        'completed' : false,   //false - show card. if true - car is checked and unvisible
-        'showCard' : true,   // show card picture, false - show back - no picture
-        } 
-      )
-  )
-  const getfillList = () => unsortList(DubleList(filterList(getList())))
-
-  const gameFinished = (ItemList) => (ItemList.filter((item)=>(item.completed === false)).length ===0);
-  const DubleList = (myList) => [...myList, ...myList].map((item)=>structuredClone(item))
   
-  const filterList = myList => myList.filter((item, ind) => (ind+1)<=(pictureCount()) ? true : false)
-  
-  
-
-
-  const onCardClick = (id) => {
-    const Finished = CardClick(id, ItemList, Steps, buferItems)
-    
-    setStep(Steps+1);
-    //console.log(id);
-    if (gameFinished(ItemList)) {
-      addNewResult([...ResultItemTable, 
-        {'position': ResultItemTable.length+1, 
-        'steps': Steps, 
-        'time' : Times, 
-        'size' : '' + dim_height + 'x' + dim_width
-        }]);
-      }
+  const onClickRestart = () => {
+    OnClickRefresh(getfillList());
+    RestartTimer();
   }
 
   const onClickUp = (Param1) => {
-    if (Param1 === 'Height'){
-      const newParam = dim_height + 1;
-      if (Math.floor((newParam * dim_width)/2) <= max_pictures) {
-        setHeight(newParam);  
-        console.log(dim_height,' ', pictureCount())
-        onClickRestart();
-      }
-    }
+    if (Param1 === 'Height') {SetupNewHeight(+ 1); onClickRestart();};
     
-    if (Param1 === 'Width'){
-      const newParam = dim_width + 1;
-      if (Math.floor((newParam * dim_height)/2) <= max_pictures) {
-        setWidth(newParam);  
-        console.log(dim_width,' ', pictureCount());
-        onClickRestart();
-      }
-    }
+    if (Param1 === 'Width')  {SetupNewWidth(+ 1);onClickRestart();};
   }
 
   const onClickDown = (Param1) => {
-    if ((Param1 === 'Height') && (dim_height>1)) {
-      setHeight(dim_height-1);
-      //OnClickRefresh(getfillList());
-    }
+    if (Param1 === 'Height') {SetupNewHeight(-1);onClickRestart();};
 
-    if ((Param1 === 'Width') && (dim_width>1)) {
-      setWidth(dim_width-1);
-      //OnClickRefresh(getfillList());
-    }
+    if (Param1 === 'Width') {SetupNewWidth(-1);onClickRestart();};
   }
 
-  const [ItemList, OnClickRefresh] =   useState(getfillList());
-  //const ItemList = PoleItems();
-
   
-  
-  
-
-
   useEffect(()=>{
-    OnClickRefresh(getfillList())
+    //const myWidth = localStorage.getItem('width');
+    //console.log('width from storage : ' + myWidth + '  ' + Times);
+  console.log('RENDER')
+    if (Times> 5) {
+      StopTimer();
+      console.log('stop timer');
+    }; 
 
-  }, [dim_height, dim_width]);
+  })
 
-
-
-
-
+  useEffect(()=>
+  {
+    if (Steps===1) {StartTimer()}
+  },[Steps]
+  )
 
   return (
       <div className='centralpanel'>
-         <GameContext.Provider value = {{ItemList, onClickRestart, onCardClick, onClickUp, onClickDown}}>
-          
+         <GameContext.Provider value = {{ItemList, onClickRestart, onCardClickPole , onClickUp, onClickDown, RestartTimer, Finished, CurrentSize, Steps, Counts, Times}}>
+
             <MenuPanel 
                 Counts={Counts} 
-                Steps={Steps} 
                 Times = {Times}
                 />
             
-            <PolePanel 
-                
-                
-
-            />
+            <BoardPanel />
             
-            <ResultPanel
-              ResultItemTable = {ResultItemTable}
-            />
+            <ResultPanel/>
             
           </GameContext.Provider>    
 
