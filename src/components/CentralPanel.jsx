@@ -1,14 +1,14 @@
 import React , {useState, useEffect, memo} from 'react'
 
-import MenuPanel from '../components/MenuPanel'
+import MenuPanel from './MenuPanel'
 import BoardPanel from './BoardPanel'
-import ResultPanel from '../components/ResultPanel'
+import ResultPanel from './ResultPanel'
 
 import Board from './Board'
 
-import App from '../components/test_app'
+import App from './test_app'
 
-import {InvertCard, reminesToOpen, GameContext, max_pictures, unsortList, pictureList} from '../components/hooks'
+import {InvertCard, reminesToOpen, GameContext, max_pictures, unsortList, pictureList} from './hooks'
 
 //PICTURES
 import png_refresh from '../pictures/refresh.png';
@@ -70,7 +70,7 @@ export default function CentralPanel(){
 
   return (
       <div className='centralpanel'>
-         <GameContext.Provider value = {{ItemList, onCardClickPole , onClickUp, onClickDown, Finished, CurrentSize, Steps, Counts}}>
+         <GameContext.Provider value = {{ItemList, onCardClickPole , onClickUp, onClickDown, Finished, CurrentSize, Steps, Counts, OnClickRefresh}}>
 
             <MenuPanel/>
             

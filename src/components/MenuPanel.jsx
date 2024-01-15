@@ -1,7 +1,7 @@
 import React , {useState, useEffect, useContext} from 'react'
 import {GameContext} from './hooks'
-import ButtonRefresh from '../components/ButtonRefresh'
-import {GameTimer} from '../components/gameTimer'
+import ButtonRefresh from './ButtonRefresh'
+import {GameTimer} from './gameTimer'
 
 //PICTURES
 import png_arrow_up from '../pictures/arrow-up.png';

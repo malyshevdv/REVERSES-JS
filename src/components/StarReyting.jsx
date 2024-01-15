@@ -1,6 +1,6 @@
 import React , {useState} from "react";
 import { FaStar } from "react-icons/fa";
-import {useColorContext} from "../components/color-context"
+import {useColorContext} from "./color-context"
 
 const CreateArray = num => [...Array(num)]
 

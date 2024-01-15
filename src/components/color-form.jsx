@@ -1,4 +1,4 @@
-import { useInput} from '../components/hooks'
+import { useInput} from './hooks'
 import { useColorContext } from './color-context';
 
 

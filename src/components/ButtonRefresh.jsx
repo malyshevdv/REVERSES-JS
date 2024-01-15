@@ -1,17 +1,17 @@
 import React from 'react'
 import png_refresh from '../pictures/refresh.png';
 
-import {useGameContext} from "../components/hooks"
+import {useGameContext} from "./hooks"
 
 export default function ButtonRefresh(){
-    const {onClickRestart} = useGameContext();
+    const {OnClickRefresh} = useGameContext();
     //ClickButton("ReFill")
 
 return(
 
     <div 
        className="button" 
-       onClick = {() => {onClickRestart();}} 
+       onClick = {() => OnClickRefresh()} 
        height="32px"
 
     >

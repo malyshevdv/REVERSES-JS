@@ -1,8 +1,8 @@
 import React from 'react'
 
 
-import ClearPanel from '../components/ClearPanel'
-import CentralPanel from '../components/CentralPanel'
+import ClearPanel from './ClearPanel'
+import CentralPanel from './CentralPanel'
 
 
 export default function MainPanel() {
