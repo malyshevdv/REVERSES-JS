@@ -1,15 +1,20 @@
 import React , {useState, useEffect, useContext} from 'react'
 import {GameContext} from './hooks'
 import ButtonRefresh from '../components/ButtonRefresh'
-
+import {GameTimer} from '../components/gameTimer'
 
 //PICTURES
 import png_arrow_up from '../pictures/arrow-up.png';
 import png_arrow_down from '../pictures/arrow-down.png';
 import { useGameContext } from './hooks';
 
+
 export default function MenuPanel( ){
-  const {Counts, Steps, Times } = useContext(GameContext);  
+  const {Counts, Steps} = useContext(GameContext);  
+  
+  const [Times, RestartTimer, StopTimer, StartTimer] = GameTimer();
+
+  
   
   return (
     <div className="top-panel titles" height="32px" >

@@ -39,7 +39,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 let res = 1
 
-root.render( <MainPanel/>);
+root.render( 
+  <React.StrictMode>
+    <MainPanel/>
+  </React.StrictMode>
+);
 
 
 

@@ -1,1 +1,1 @@
-npm run build
+docker image build -t memory .

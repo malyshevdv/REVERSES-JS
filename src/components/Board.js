@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from 'react'
+import React , {useState, useEffect, useCallback} from 'react'
 import {InvertCard, max_pictures, unsortList, pictureList} from './hooks'
 
 export default function PoleHook() {
@@ -43,27 +43,29 @@ export default function PoleHook() {
     const UpdateRemines = () => setCount(ItemList.length - CompliteList().length);
 
 
-    const OnClickRefresh = () => {
+    const OnClickRefresh = useCallback(() => {
         SetNewItemList(getfillList());
         setStep(0);
         SetFinished(false);
         UpdateRemines();
-    }
+    },[dim_width, dim_height])
 
-    const SetupNewWidth = (newStep) => {
-        const newParam = dim_width + newStep;
-        if ((Math.floor((newParam * dim_height) / 2) <= max_pictures) && (newParam > 0)) {
-            setWidth(newParam);
-            console.log(dim_width, ' ', pictureCount());
-        }
-    }
+    const SetupNewParam = (PanamName, newStep) => {
+        if (PanamName === 'Width') {
 
-    const SetupNewHeight = (newStep) => {
-        const newParam = dim_height + newStep;
-        if ((Math.floor((newParam * dim_width) / 2) <= max_pictures) && (newParam > 0)) {
-            setHeight(newParam);
+            const newParam = dim_width + newStep;
+            if ((Math.floor((newParam * dim_height) / 2) <= max_pictures) && (newParam > 0)) {
+                setWidth(newParam);
+                console.log(dim_width, ' ', pictureCount());
+            }
         }
-    }
+        if (PanamName === 'Height') {
+            const newParam = dim_height + newStep;
+            if ((Math.floor((newParam * dim_width) / 2) <= max_pictures) && (newParam > 0)) {
+                setHeight(newParam);
+            }
+        }
+    }    
 
 
     const CardClick = (id, ItemList, Steps) => {
@@ -93,7 +95,7 @@ export default function PoleHook() {
 
         if (res.gameFinished) {
             SetFinished(true);
-            
+
         }
         UpdateRemines();
         return res;
@@ -143,6 +145,6 @@ export default function PoleHook() {
     }, [dim_height, dim_width]);
 
 
-    return [ItemList, OnClickRefresh, getfillList, SetupNewWidth, SetupNewHeight, onCardClick, Steps, Counts, Finished, CurrentSize]
+    return [ItemList, OnClickRefresh, getfillList, SetupNewParam, onCardClick, Steps, Counts, Finished, CurrentSize]
 
 }
