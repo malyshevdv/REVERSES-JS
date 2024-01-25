@@ -1,4 +1,4 @@
-#REVERSES-JS
+# REVERSES-JS
 This Mini-game that help you to improve your memory.
 
 NOTE 
