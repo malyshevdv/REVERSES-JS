@@ -9,6 +9,10 @@ export function Card({ind, completed,showCard, src}){
     console.log('Card ' + ind);
     return (
         <div 
+            id={'card_'+ ind} 
+            showCard={showCard.toString()} 
+            completed={completed.toString()} 
+
             className= {completed === true ? 'unit completed' : 'unit'}
                 ind = {ind} 
                 onClick = {() => onCardClickPole(ind)}
