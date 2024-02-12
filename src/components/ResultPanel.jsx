@@ -32,7 +32,11 @@ export default function ResultPanel(){
     return (
         <div className="down-panel">
                 <p>RESULT TABLE</p>
-                <table border="1px" >
+                <table 
+                   border="1px" 
+                   id="ResultTable"
+                   resultlines={ResultItemTable.length}
+                >
                     <thead>
                         <tr>
                             <th width="20rem">Position</th>

@@ -9,10 +9,10 @@ import { useGameContext } from './hooks'
 
 export default function BoardPanel(){
     
-    const {ItemList} = useGameContext();
+    const {ItemList, pictureCount} = useGameContext();
     
     return (
-        <div id='pole' className="pole">
+        <div id='pole' className="pole" pictureCount={pictureCount()} >
             {ItemList.map((item, ind)=>    
             <Card 
                 key={ind} 

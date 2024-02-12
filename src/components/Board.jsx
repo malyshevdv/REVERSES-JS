@@ -145,6 +145,6 @@ export default function PoleHook() {
     }, [dim_height, dim_width]);
 
 
-    return [ItemList, OnClickRefresh, getfillList, SetupNewParam, onCardClick, Steps, Counts, Finished, CurrentSize]
+    return [ItemList, OnClickRefresh, getfillList, SetupNewParam, onCardClick, Steps, Counts, Finished, CurrentSize, pictureCount]
 
 }
