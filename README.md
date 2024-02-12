@@ -14,3 +14,9 @@ RULES
 - if you open (hide) all pictures - you win.
 
 ![image](https://github.com/malyshevdv/REVERSES-JS/assets/56846927/5566a76b-f6c9-48a8-9f9f-a3d9b7602675)
+
+
+Sample result of automate testing with halp Pytest-Selenium
+
+https://github.com/malyshevdv/REVERSES-JS/assets/56846927/62112424-ba8c-4c51-afc7-73f11d11246e
+
