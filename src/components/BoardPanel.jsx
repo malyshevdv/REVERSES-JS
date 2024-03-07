@@ -2,17 +2,26 @@ import React from 'react'
 
 import {Card} from './card'
 import { useGameContext } from './hooks'
-
+import { Flex, Grid, View, useTheme, Button } from '@aws-amplify/ui-react';
 
 
 //======= POLE ================
 
 export default function BoardPanel(){
     
-    const {ItemList, pictureCount} = useGameContext();
+    const {ItemList, pictureCount, templateColumns} = useGameContext();
     
+    //"1fr 1fr 1fr 1fr 1fr 1fr  1fr"
+
     return (
-        <div id='pole' className="pole" pictureCount={pictureCount()} >
+        <Grid 
+           templateColumns= {templateColumns}
+           id='pole' 
+           className="pole" 
+           gap="1rem"
+           justifyContent="center"
+           pictureCount={pictureCount()} 
+        >
             {ItemList.map((item, ind)=>    
             <Card 
                 key={ind} 
@@ -24,7 +33,7 @@ export default function BoardPanel(){
                 />    
             )}
             
-        </div>
+        </Grid>
     )
 }
 

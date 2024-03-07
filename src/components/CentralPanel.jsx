@@ -24,7 +24,7 @@ import png_arrow_right from '../pictures/arrow-right.png';
 
 export default function CentralPanel(){
 
-  const [ItemList, OnClickRefresh, getfillList, SetupNewParam, onCardClick, Steps, Counts, Finished, CurrentSize, pictureCount] = Board();
+  const [ItemList, OnClickRefresh, getfillList, SetupNewParam, onCardClick, Steps, Counts, Finished, CurrentSize, pictureCount, templateColumns] = Board();
 
   const onCardClickPole = (id) => {
       
@@ -70,7 +70,7 @@ export default function CentralPanel(){
 
   return (
       <div className='centralpanel'>
-         <GameContext.Provider value = {{ItemList, onCardClickPole , onClickUp, onClickDown, Finished, CurrentSize, Steps, Counts, OnClickRefresh, pictureCount}}>
+         <GameContext.Provider value = {{ItemList, onCardClickPole , onClickUp, onClickDown, Finished, CurrentSize, Steps, Counts, OnClickRefresh, pictureCount, templateColumns}}>
 
             <MenuPanel/>
             

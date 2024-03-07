@@ -1,14 +1,14 @@
 import React, {memo} from 'react'
 import Unselected from '../pictures/Unselected.png';
 import { useGameContext } from './hooks';
-
+import { Flex, Grid, View, useTheme, Button } from '@aws-amplify/ui-react';
 
 
 export function Card({ind, completed,showCard, src}){
     const {onCardClickPole} = useGameContext();
     console.log('Card ' + ind);
     return (
-        <div 
+        <Button 
             id={'card_'+ ind} 
             showCard={showCard.toString()} 
             completed={completed.toString()} 
@@ -26,7 +26,7 @@ export function Card({ind, completed,showCard, src}){
                completed = {completed}
             />
 
-        </div>
+        </Button>
     )
 
 }

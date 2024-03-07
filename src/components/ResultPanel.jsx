@@ -1,5 +1,49 @@
 import React , {useState, useEffect, useContext} from 'react'
+import { Flex, Grid, View, useTheme, Button } from '@aws-amplify/ui-react';
 import {GameContext} from './hooks'
+
+import '@aws-amplify/ui-react/styles/reset.layer.css' // global CSS reset
+import '@aws-amplify/ui-react/styles/base.layer.css' // base styling needed for Amplify UI
+import '@aws-amplify/ui-react/styles/button.layer.css' // component specific styles
+
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    ThemeProvider,
+    Theme,
+  } from '@aws-amplify/ui-react';
+
+
+  const theme = {
+    name: 'table-theme',
+    tokens: {
+      components: {
+        table: {
+          row: {
+            hover: {
+              backgroundColor: { value: '{colors.blue.20}' },
+            },
+  
+            striped: {
+              backgroundColor: { value: '{colors.blue.10}' },
+            },
+          },
+  
+          header: {
+            color: { value: '{colors.blue.80}' },
+            fontSize: { value: '{fontSizes.xl}' },
+          },
+  
+          data: {
+            fontWeight: { value: '{fontWeights.semibold}' },
+          },
+        },
+      },
+    },
+  };
 
 function ResultHook(){
     const [ResultItemTable, addNewResult] = useState([]);
@@ -29,43 +73,42 @@ export default function ResultPanel(){
     },[Finished])
 
 
-    return (
-        <div className="down-panel">
-                <p>RESULT TABLE</p>
-                <table 
-                   border="1px" 
-                   id="ResultTable"
-                   resultlines={ResultItemTable.length}
-                >
-                    <thead>
-                        <tr>
-                            <th width="20rem">Position</th>
-                            <th width="120rem">Steps</th>
-                            <th width="120rem">Time</th>
-                            <th width="120rem">Size</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableResult">
+return (
+    <ThemeProvider theme={theme} colorMode="light">
+    <Table 
+        resultlines={ResultItemTable.length}
+        highlightOnHover variation="striped"
+    >
+        <TableHead>
+            <TableRow>
+                <TableCell as="th">Position</TableCell>
+                <TableCell as="th">Steps</TableCell>
+                <TableCell as="th">Time</TableCell>
+                <TableCell as="th">Size</TableCell>
+            </TableRow>
+        </TableHead>
 
-                    {ResultItemTable.map((myTemp, ind)=>
-                        (<ResultString key = {ind} {...myTemp}
-                    />)
-                    )}
+        <TableBody>
 
-                    </tbody>
+        {ResultItemTable.map((myTemp, ind)=>
+            (<ResultString key = {ind} {...myTemp}
+        />)
+        )}
 
-                </table>
-            </div>
+        </TableBody>
+
+    </Table>
+    </ThemeProvider>
     )
 }
 
 function ResultString({position, steps, time, size}){
     return (
-        <tr>
-            <td>{position}</td>
-            <td>{steps}</td>
-            <td>{time}</td>
-            <td>{size}</td>
-        </tr>
+        <TableRow>
+            <TableCell as="th">{position}</TableCell>
+            <TableCell as="th">{steps}</TableCell>
+            <TableCell as="th">{time}</TableCell>
+            <TableCell as="th">{size}</TableCell>
+        </TableRow>
     )
 }

@@ -4,6 +4,11 @@ import './index.css';
 import './mystyle.css';
 //import App from './App';
 
+import '@aws-amplify/ui-react/styles/reset.layer.css' // global CSS reset
+import '@aws-amplify/ui-react/styles/base.layer.css' // base styling needed for Amplify UI
+import '@aws-amplify/ui-react/styles/button.layer.css' // component specific styles
+import '@aws-amplify/ui-react/styles.css';
+
 //COMPONENTS
 
 import MainPanel from './components/mainPanel'

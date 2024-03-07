@@ -7,6 +7,7 @@ export default function PoleHook() {
     let [dim_height, setHeight] = useState(3);
     const CurrentSize = () => ('' + dim_height + 'x' + dim_width);
     
+    const [templateColumns, settemplateColumns] = useState("1fr ".repeat(dim_width));
     const [Counts, setCount] = useState(0);
 
     const [Steps, setStep] = useState(0)
@@ -57,6 +58,7 @@ export default function PoleHook() {
             if ((Math.floor((newParam * dim_height) / 2) <= max_pictures) && (newParam > 0)) {
                 setWidth(newParam);
                 console.log(dim_width, ' ', pictureCount());
+                settemplateColumns('1fr '.repeat(newParam))
             }
         }
         if (PanamName === 'Height') {
@@ -145,6 +147,6 @@ export default function PoleHook() {
     }, [dim_height, dim_width]);
 
 
-    return [ItemList, OnClickRefresh, getfillList, SetupNewParam, onCardClick, Steps, Counts, Finished, CurrentSize, pictureCount]
+    return [ItemList, OnClickRefresh, getfillList, SetupNewParam, onCardClick, Steps, Counts, Finished, CurrentSize, pictureCount, templateColumns]
 
 }
